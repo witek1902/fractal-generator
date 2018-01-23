@@ -6,15 +6,15 @@ import java.awt.event.*;
 
 public final class Generator extends Applet implements MouseListener, MouseMotionListener, KeyListener, Runnable {
 
-    private int maxCount = 200; // maksymalna liczba iteracji
-    private int fractal = 0; // aktualnie rysowany fraktal
-    private boolean smooth = false; // wygładzanie krawędzi
-    private boolean toDrag = false; // mozliwosc przesuwania
-    private Color[][] colors; // paleta kolorow
-    private int pal = 0; // aktualna paleta kolorow
+    private int maxCount = 200;
+    private int actualFractal = 0;
+    private boolean shouldSmooth = false;
+    private boolean dragAvailable = false;
+    private Color[][] colors;
+    private int actualPallete = 0;
     // zmienne do rysowania zbioru Juli
     private boolean julia = false;
-    private double juliaX =  0.56667, juliaY = -0.5;
+    private double juliaX = 0.56667, juliaY = -0.5;
     private boolean toDrawAll = true;
     // obecnie widoczne polozenie okna
     private double viewX = 0.0;
@@ -28,40 +28,40 @@ public final class Generator extends Applet implements MouseListener, MouseMotio
     private Thread thread = null;
     private int mouseX, mouseY; // pozycja myszki podczas nacisniecia przycisku
     private int dragX, dragY; // pozycja myszki podczas przeciagania
-    private static final int[][][] colpal = { // paleta kolorow, gotowiec
-        {{12, 0, 10, 20}, {12, 50, 100, 240}, {12, 20, 3, 26}, {12, 230, 60, 20},
-            {12, 25, 10, 9}, {12, 230, 170, 0}, {12, 20, 40, 10}, {12, 0, 100, 0},
-            {12, 5, 10, 10}, {12, 210, 70, 30}, {12, 90, 0, 50}, {12, 180, 90, 120},
-            {12, 0, 20, 40}, {12, 30, 70, 200}},
-        {{10, 70, 0, 20}, {10, 100, 0, 100}, {14, 255, 0, 0}, {10, 255, 200, 0}},
-        {{8, 40, 70, 10}, {9, 40, 170, 10}, {6, 100, 255, 70}, {8, 255, 255, 255}},
-        {{12, 0, 0, 64}, {12, 0, 0, 255}, {10, 0, 255, 255}, {12, 128, 255, 255}, {14, 64, 128, 255}},
-        {{16, 0, 0, 0}, {32, 255, 255, 255}},};
+    private static final int[][][] colorPallete = { // paleta kolorow, gotowiec
+            {{12, 0, 10, 20}, {12, 50, 100, 240}, {12, 20, 3, 26}, {12, 230, 60, 20},
+                    {12, 25, 10, 9}, {12, 230, 170, 0}, {12, 20, 40, 10}, {12, 0, 100, 0},
+                    {12, 5, 10, 10}, {12, 210, 70, 30}, {12, 90, 0, 50}, {12, 180, 90, 120},
+                    {12, 0, 20, 40}, {12, 30, 70, 200}},
+            {{10, 70, 0, 20}, {10, 100, 0, 100}, {14, 255, 0, 0}, {10, 255, 200, 0}},
+            {{8, 40, 70, 10}, {9, 40, 170, 10}, {6, 100, 255, 70}, {8, 255, 255, 255}},
+            {{12, 0, 0, 64}, {12, 0, 0, 255}, {10, 0, 255, 255}, {12, 128, 255, 255}, {14, 64, 128, 255}},
+            {{16, 0, 0, 0}, {32, 255, 255, 255}},};
     private static final int[][] rows = {
-        {0, 16, 8}, {8, 16, 8}, {4, 16, 4}, {12, 16, 4},
-        {2, 16, 2}, {10, 16, 2}, {6, 16, 2}, {14, 16, 2},
-        {1, 16, 1}, {9, 16, 1}, {5, 16, 1}, {13, 16, 1},
-        {3, 16, 1}, {11, 16, 1}, {7, 16, 1}, {15, 16, 1},};
+            {0, 16, 8}, {8, 16, 8}, {4, 16, 4}, {12, 16, 4},
+            {2, 16, 2}, {10, 16, 2}, {6, 16, 2}, {14, 16, 2},
+            {1, 16, 1}, {9, 16, 1}, {5, 16, 1}, {13, 16, 1},
+            {3, 16, 1}, {11, 16, 1}, {7, 16, 1}, {15, 16, 1},};
 
-    //inicjalizacja listenerow i palety kolorow
+
     @Override
     public void init() {
         addMouseListener(this);
         addMouseMotionListener(this);
         addKeyListener(this);
 
-        colors = new Color[colpal.length][];
-        for (int p = 0; p < colpal.length; p++) {
+        colors = new Color[colorPallete.length][];
+        for (int p = 0; p < colorPallete.length; p++) {
             int n = 0;
-            for (int i = 0; i < colpal[p].length; i++) {
-                n += colpal[p][i][0];
+            for (int i = 0; i < colorPallete[p].length; i++) {
+                n += colorPallete[p][i][0];
             }
 
             colors[p] = new Color[n];
             n = 0;
-            for (int i = 0; i < colpal[p].length; i++) {
-                int[] c1 = colpal[p][i];
-                int[] c2 = colpal[p][(i + 1) % colpal[p].length];
+            for (int i = 0; i < colorPallete[p].length; i++) {
+                int[] c1 = colorPallete[p][i];
+                int[] c2 = colorPallete[p][(i + 1) % colorPallete[p].length];
                 for (int j = 0; j < c1[0]; j++) {
                     colors[p][n + j] = new Color(
                             (c1[1] * (c1[0] - 1 - j) + c2[1] * j) / (c1[0] - 1),
@@ -84,7 +84,7 @@ public final class Generator extends Applet implements MouseListener, MouseMotio
     @SuppressWarnings("empty-statement")
     public void run() {
         while (thread != null) {
-            while (draw());
+            while (draw()) ;
             synchronized (this) {
                 try {
                     wait();
@@ -106,11 +106,11 @@ public final class Generator extends Applet implements MouseListener, MouseMotio
     }
 
     private synchronized Color getColor(int i) {
-        int palSize = colors[pal].length;
+        int palSize = colors[actualPallete].length;
         if (i + palSize < 0) {
             i = Math.max(0, i + palSize);
         }
-        return colors[pal][(i + palSize) % palSize];
+        return colors[actualPallete][(i + palSize) % palSize];
     }
 
     private synchronized boolean toDraw() {
@@ -171,7 +171,7 @@ public final class Generator extends Applet implements MouseListener, MouseMotio
     private Color color(double x, double y) {
         int count = julia ? zfun(x, y, juliaX, juliaY) : zfun(0.0, 0.0, x, y);
         Color color = getColor(count / 256);
-        if (smooth) {
+        if (shouldSmooth) {
             Color color2 = getColor(count / 256 - 1);
             int k1 = count % 256;
             int k2 = 255 - k1;
@@ -185,7 +185,7 @@ public final class Generator extends Applet implements MouseListener, MouseMotio
 
     //wybor funkcji do rysowania, zastosowany switch w celu latwego dodawania kolejnych funkcji
     private int zfun(double zr, double zi, double cr, double ci) {
-        switch (fractal) {
+        switch (actualFractal) {
             case 1:
                 return phoenix(zr, zi, cr, ci);
             default:
@@ -210,7 +210,7 @@ public final class Generator extends Applet implements MouseListener, MouseMotio
             return 0;
         }
         zm += 0.000000001;
-        return 256 * count + (smooth ? (int) (255.0 * Math.log(4.0 / zm) / Math.log((pr + pi) / zm)) : 0);
+        return 256 * count + (shouldSmooth ? (int) (255.0 * Math.log(4.0 / zm) / Math.log((pr + pi) / zm)) : 0);
     }
 
     //Phoenix
@@ -235,7 +235,7 @@ public final class Generator extends Applet implements MouseListener, MouseMotio
             return 0;
         }
         zm += 0.000000001;
-        return 256 * count + (smooth ? (int) (255.0 * Math.log(4.0 / zm) / Math.log((pr + pi) / zm)) : 0);
+        return 256 * count + (shouldSmooth ? (int) (255.0 * Math.log(4.0 / zm) / Math.log((pr + pi) / zm)) : 0);
     }
 
     @Override
@@ -256,7 +256,7 @@ public final class Generator extends Applet implements MouseListener, MouseMotio
 
         bufferGraphics.drawImage(image, 0, 0, null);
         g.drawImage(bufferImage, 0, 0, null);
-        if (toDrag) {
+        if (dragAvailable) {
             g.setColor(Color.black);
             g.setXORMode(Color.white);
             int x = Math.min(mouseX, dragX);
@@ -283,11 +283,11 @@ public final class Generator extends Applet implements MouseListener, MouseMotio
 
     //zmiana rysowanego fraktala
     public void space() {
-        fractal = (fractal + 1) % 2;
+        actualFractal = (actualFractal + 1) % 2;
         viewX = viewY = 0.0;
         zoom = 1.0;
         julia = false;
-        if (fractal == 0) {
+        if (actualFractal == 0) {
             juliaX = 0.56667;
             juliaY = -0.5;
             julia = true;
@@ -315,18 +315,18 @@ public final class Generator extends Applet implements MouseListener, MouseMotio
     //rysowanie zbioru Julli
     public void setJulia() {
         julia = !julia;
-        redraw(); 
+        redraw();
     }
 
     //wygladzanie krawedzi
     public void smoothing() {
-        smooth = !smooth;
-        redraw(); 
+        shouldSmooth = !shouldSmooth;
+        redraw();
     }
 
     //nastepna paleta kolorow
     public void nextPalette() {
-        pal = (pal + 1) % colors.length;
+        actualPallete = (actualPallete + 1) % colors.length;
         redraw();
     }
 
@@ -346,17 +346,17 @@ public final class Generator extends Applet implements MouseListener, MouseMotio
         viewY += r / zoom0 * zoom * sy / 2.0;
         redraw();
     }
-    
+
     @Override
     public void mousePressed(MouseEvent e) {
         mouseX = dragX = e.getX();
         mouseY = dragY = e.getY();
-        toDrag = true;
+        dragAvailable = true;
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        toDrag = false;
+        dragAvailable = false;
         int x = e.getX();
         int y = e.getY();
         if ((e.getModifiers() & InputEvent.BUTTON1_MASK) != 0) { // puszczenie lewego przycisku myszy
