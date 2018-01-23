@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+	http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>pl.witkowski</groupId>
+    <artifactId>fractal-generator</artifactId>
+    <name>Fractal Generator</name>
+
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <jdk.version>1.8</jdk.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.20</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>FractalGenerator</finalName>
+        <plugins>
+
+            <!-- Set a JDK compiler level -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
+            </plugin>
+
+            <!-- Make this jar executable -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <!-- Jar file entry point -->
+                            <mainClass>pl.witkowski.fractal.generator.FraktalPanel</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
