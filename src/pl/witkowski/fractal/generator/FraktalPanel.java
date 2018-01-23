@@ -19,68 +19,38 @@ public class FraktalPanel extends JFrame {
         setVisible(true);
     }
 
-    /* metoda tworzaca okienko JDialog, w ktorym sa informacje dotyczace programu */
-    private JDialog createAbout() {
-
-        final JDialog OknoDialogowe = new JDialog(this, "O programie...", true);
-        JButton ZamknijButton = new JButton("Zamknij");
-        JPanel PanelAbout = new JPanel(new BorderLayout());
-        PanelAbout.setBackground(new java.awt.Color(218, 218, 218));
-        JTextArea text = new JTextArea("Generator Fraktali\n"
-                + "Wersja 1.0, 08.01.2013\n\n"
-                + "Robert Witkowski\n"
-                + "Politechnika Warszawska\n"
-                + "Wydział Elektryczny, Informatyka\n\n"
-                + "mail: witek1902@gmail.com\n");
-        text.setEditable(false);
-        text.setBackground(new java.awt.Color(218, 218, 218));
-        ZamknijButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                OknoDialogowe.setVisible(false);
-            }
-        });
-        PanelAbout.add(ZamknijButton, BorderLayout.SOUTH);
-        PanelAbout.add(text,BorderLayout.NORTH);
-        PanelAbout.setVisible(true);
-        OknoDialogowe.add(PanelAbout);
-        OknoDialogowe.setLocationRelativeTo(this);
-        OknoDialogowe.pack();
-        OknoDialogowe.setResizable(false);
-        return OknoDialogowe;
-    }
     private void initComponents() {
 
-        Fraktal = new javax.swing.JPanel();
-        ButtonPanel = new javax.swing.JPanel();
-        NextButton = new javax.swing.JButton();
-        NewButton = new javax.swing.JButton();
-        ZoomINButton = new javax.swing.JButton();
-        ZoomOUTButton = new javax.swing.JButton();
-        JuliaSetButton = new javax.swing.JButton();
-        nextPaletteButton = new javax.swing.JButton();
-        SmoothButton = new javax.swing.JButton();
-        CountSpinner = new javax.swing.JSpinner();
-        CountButton = new javax.swing.JButton();
-        OProgramieButton = new javax.swing.JButton();
+        Fraktal = new JPanel();
+        ButtonPanel = new JPanel();
+        NextButton = new JButton();
+        NewButton = new JButton();
+        ZoomINButton = new JButton();
+        ZoomOUTButton = new JButton();
+        JuliaSetButton = new JButton();
+        nextPaletteButton = new JButton();
+        SmoothButton = new JButton();
+        CountSpinner = new JSpinner();
+        CountButton = new JButton();
+        OProgramieButton = new JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Generator fraktali v1.0");
         setName("Generator Fraktali");
         setResizable(false);
 
-        javax.swing.GroupLayout FraktalLayout = new javax.swing.GroupLayout(Fraktal);
+        GroupLayout FraktalLayout = new GroupLayout(Fraktal);
         Fraktal.setLayout(FraktalLayout);
         FraktalLayout.setHorizontalGroup(
-            FraktalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            FraktalLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
         FraktalLayout.setVerticalGroup(
-            FraktalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            FraktalLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGap(0, 559, Short.MAX_VALUE)
         );
 
-        CountSpinner.setModel(new javax.swing.SpinnerNumberModel(200, 10, 10000, 10));
+        CountSpinner.setModel(new SpinnerNumberModel(200, 10, 10000, 10));
         CountSpinner.setToolTipText("Ustaw maksymalną ilość iteracji");
         
         NextButton.setText("Następny fraktal");
@@ -146,76 +116,76 @@ public class FraktalPanel extends JFrame {
             }
         });
 
-        javax.swing.GroupLayout ButtonPanelLayout = new javax.swing.GroupLayout(ButtonPanel);
+        GroupLayout ButtonPanelLayout = new GroupLayout(ButtonPanel);
         ButtonPanel.setLayout(ButtonPanelLayout);
         ButtonPanelLayout.setHorizontalGroup(
-            ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ButtonPanelLayout.createSequentialGroup()
+            ButtonPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, ButtonPanelLayout.createSequentialGroup()
                 .addContainerGap(117, Short.MAX_VALUE)
-                .addComponent(CountButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addComponent(CountButton, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ButtonPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
                     .addGroup(ButtonPanelLayout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(CountSpinner)
                         .addGap(18, 18, 18)
-                        .addComponent(JuliaSetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(JuliaSetButton, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))
                     .addGroup(ButtonPanelLayout.createSequentialGroup()
-                        .addComponent(NewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(NewButton, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(NextButton)))
                 .addGap(18, 18, 18)
-                .addGroup(ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(ButtonPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                     .addGroup(ButtonPanelLayout.createSequentialGroup()
-                        .addComponent(nextPaletteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nextPaletteButton, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(SmoothButton, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(SmoothButton, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))
                     .addGroup(ButtonPanelLayout.createSequentialGroup()
-                        .addComponent(ZoomINButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ZoomOUTButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ZoomINButton, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ZoomOUTButton, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
                         .addGap(22, 22, 22)
-                        .addComponent(OProgramieButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(OProgramieButton, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)))
                 .addGap(133, 133, 133))
         );
         ButtonPanelLayout.setVerticalGroup(
-            ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            ButtonPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(ButtonPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(ButtonPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(NextButton)
                     .addComponent(nextPaletteButton)
                     .addComponent(SmoothButton)
                     .addComponent(NewButton))
                 .addGap(17, 17, 17)
-                .addGroup(ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(ButtonPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(ZoomINButton)
                     .addComponent(ZoomOUTButton)
                     .addComponent(JuliaSetButton)
-                    .addComponent(CountSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CountSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(CountButton)
                     .addComponent(OProgramieButton))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(ButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ButtonPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addComponent(Fraktal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(Fraktal, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(Fraktal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(Fraktal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ButtonPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -255,32 +225,23 @@ public class FraktalPanel extends JFrame {
     }
 
     private void OProgramieButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        this.about = this.createAbout();
-        this.about.setVisible(true);
     }
 
     public static void main(String args[]) {
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new FraktalPanel().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new FraktalPanel().setVisible(true));
     }
-    
-    private javax.swing.JDialog about;
-    private javax.swing.JPanel ButtonPanel;
-    private javax.swing.JButton CountButton;
-    private javax.swing.JSpinner CountSpinner;
-    private javax.swing.JPanel Fraktal;
-    private javax.swing.JButton JuliaSetButton;
-    private javax.swing.JButton NewButton;
-    private javax.swing.JButton NextButton;
-    private javax.swing.JButton OProgramieButton;
-    private javax.swing.JButton SmoothButton;
-    private javax.swing.JButton ZoomINButton;
-    private javax.swing.JButton ZoomOUTButton;
-    private javax.swing.JButton nextPaletteButton;
+
+    private JPanel ButtonPanel;
+    private JButton CountButton;
+    private JSpinner CountSpinner;
+    private JPanel Fraktal;
+    private JButton JuliaSetButton;
+    private JButton NewButton;
+    private JButton NextButton;
+    private JButton OProgramieButton;
+    private JButton SmoothButton;
+    private JButton ZoomINButton;
+    private JButton ZoomOUTButton;
+    private JButton nextPaletteButton;
     
 }
