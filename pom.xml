@@ -47,7 +47,7 @@
                     <archive>
                         <manifest>
                             <!-- Jar file entry point -->
-                            <mainClass>pl.witkowski.fractal.generator.FraktalPanel</mainClass>
+                            <mainClass>pl.witkowski.fractal.generator.FractalPanel</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
