@@ -1,5 +1,9 @@
 package pl.witkowski.fractal.generator;
 
+import pl.witkowski.fractal.generator.function.Function;
+import pl.witkowski.fractal.generator.function.MandelbrotFunction;
+import pl.witkowski.fractal.generator.function.PhoenixFunction;
+
 import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.*;
@@ -32,7 +36,8 @@ public final class Generator extends Applet implements MouseListener, MouseMotio
             {0, 16, 8}, {8, 16, 8}, {4, 16, 4}, {12, 16, 4},
             {2, 16, 2}, {10, 16, 2}, {6, 16, 2}, {14, 16, 2},
             {1, 16, 1}, {9, 16, 1}, {5, 16, 1}, {13, 16, 1},
-            {3, 16, 1}, {11, 16, 1}, {7, 16, 1}, {15, 16, 1},};
+            {3, 16, 1}, {11, 16, 1}, {7, 16, 1}, {15, 16, 1}
+    };
 
 
     @Override
@@ -65,12 +70,12 @@ public final class Generator extends Applet implements MouseListener, MouseMotio
 
     private void redraw() {
         toDrawAll = true;
-        if (thread != null && thread.isAlive()) { //jesli nie jest nullem i zyje
-            thread.interrupt(); //przerwanie watku
+        if (thread != null && thread.isAlive()) {
+            thread.interrupt();
         } else {
-            thread = new Thread(this); //tworzymy nowy watek
-            thread.setPriority(Thread.MIN_PRIORITY); //ustawiamy mu priorytet
-            thread.start(); //startujemy
+            thread = new Thread(this);
+            thread.setPriority(Thread.MIN_PRIORITY);
+            thread.start();
         }
     }
 
@@ -152,59 +157,13 @@ public final class Generator extends Applet implements MouseListener, MouseMotio
         return color;
     }
 
-    //wybor funkcji do rysowania, zastosowany switch w celu latwego dodawania kolejnych funkcji
     private int zfun(double zr, double zi, double cr, double ci) {
         switch (actualFractal) {
             case 1:
-                return phoenix(zr, zi, cr, ci);
+                return new PhoenixFunction(maxCount, shouldSmooth).calc(zr, zi, cr, ci);
             default:
-                return mandel(zr, zi, cr, ci);
+                return new MandelbrotFunction(maxCount, shouldSmooth).calc(zr, zi, cr, ci);
         }
-    }
-
-    // Mandelbrot
-    private int mandel(double zr, double zi, double cr, double ci) {
-        double pr = zr * zr, pi = zi * zi;
-        double zm = 0.0;
-        int count = 0;
-        while (pr + pi < 4.0 && count < maxCount) {
-            zm = pr + pi;
-            zi = 2.0 * zr * zi + ci;
-            zr = pr - pi + cr;
-            pr = zr * zr;
-            pi = zi * zi;
-            count++;
-        }
-        if (count == 0 || count == maxCount) {
-            return 0;
-        }
-        zm += 0.000000001;
-        return 256 * count + (shouldSmooth ? (int) (255.0 * Math.log(4.0 / zm) / Math.log((pr + pi) / zm)) : 0);
-    }
-
-    //Phoenix
-    private int phoenix(double zr, double zi, double cr, double ci) {
-        double pr = zr * zr, pi = zi * zi;
-        double sr = 0.0, si = 0.0;
-        double zm = 0.0;
-        int count = 0;
-        while (pr + pi < 4.0 && count < maxCount) {
-            zm = pr + pi;
-            pr = pr - pi + ci * sr + cr;
-            pi = 2.0 * zr * zi + ci * si;
-            sr = zr;
-            si = zi;
-            zr = pr;
-            zi = pi;
-            pr = zr * zr;
-            pi = zi * zi;
-            count++;
-        }
-        if (count == 0 || count == maxCount) {
-            return 0;
-        }
-        zm += 0.000000001;
-        return 256 * count + (shouldSmooth ? (int) (255.0 * Math.log(4.0 / zm) / Math.log((pr + pi) / zm)) : 0);
     }
 
     @Override
