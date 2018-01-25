@@ -1,4 +1,4 @@
-# Fractal generation
+# Java (Swing) Fractal generation
 ![Fractal_Generator](https://i.imgur.com/mwVoukw.png)
 > In mathematics a fractal is an abstract object used to describe and simulate naturally occurring objects. Artificially created fractals commonly exhibit similar patterns at increasingly small scales. It is also known as expanding symmetry or evolving symmetry. If the replication is exactly the same at every scale, it is called a self-similar pattern. An example of this is the Menger sponge. Fractals can also be nearly the same at different levels. This latter pattern is illustrated in small magnifications of the Mandelbrot set. Fractals also include the idea of a detailed pattern that repeats itself.
 ## About
