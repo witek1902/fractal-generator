@@ -6,6 +6,9 @@ This project was created in 2013. In January 2018 I decided to little refactorin
 If you want to trace the refactoring process - look at commit history. \
 In folder **old-src** you can see the old code written in **student times** with comment/code in polish language :)
 
+## Run
+Run ```FractalGenerator.jar``` from main folder.
+
 ## Requirements
  - Java 8
  - Maven 3
