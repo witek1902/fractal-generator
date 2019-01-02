@@ -15,7 +15,8 @@ Run ```FractalGenerator.jar``` from main folder.
 
 ## TODO
 1. Write tests.
-2. Split Generator, because has too much responsibilities (FractalMouseListener, FractalMouseMotionListener, FractalKeyListener).
+2. Split `FractalDrawer`, because has too much responsibilities (`MouseListener`, `MouseMotionListener`,`KeyListener`).
+3. Remove magic numbers, move to static class/config file.
 
 ## References
  - https://en.wikipedia.org/wiki/Fractal
